@@ -1,0 +1,98 @@
+import java.util.*;
+
+class Solution {
+    private static final int MOD = 1_000_000_007;
+    private int[][] parent;
+    private int[] depth;
+    private int LOG;
+
+    public int[] assignEdgeWeights(int[][] edges, int[][] queries) {
+        int n = edges.length + 1;
+        LOG = Math.max(1, 32 - Integer.numberOfLeadingZeros(n));
+
+        // Build adjacency list
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+
+        // Initialize arrays
+        depth = new int[n + 1];
+        parent = new int[LOG][n + 1];
+
+        // BFS to compute depth and base parents
+        bfs(1, n, adj);
+
+        // Build binary lifting table
+        for (int k = 1; k < LOG; k++)
+            for (int v = 1; v <= n; v++)
+                parent[k][v] = parent[k - 1][parent[k - 1][v]];
+
+        // Precompute powers of 2
+        int maxK = 2 * n;
+        long[] pow2 = new long[maxK + 1];
+        pow2[0] = 1;
+        for (int i = 1; i <= maxK; i++)
+            pow2[i] = pow2[i - 1] * 2 % MOD;
+
+        // Answer queries
+        int[] result = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int u = queries[i][0], v = queries[i][1];
+            if (u == v) {
+                result[i] = 0;
+                continue;
+            }
+            int l = lca(u, v);
+            int k = depth[u] + depth[v] - 2 * depth[l];
+            result[i] = k == 0 ? 0 : (int) pow2[k - 1];
+        }
+
+        return result;
+    }
+
+    private void bfs(int root, int n, List<List<Integer>> adj) {
+        boolean[] visited = new boolean[n + 1];
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(root);
+        visited[root] = true;
+        parent[0][root] = root; // root's parent is itself
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            for (int nei : adj.get(node)) {
+                if (!visited[nei]) {
+                    visited[nei] = true;
+                    depth[nei] = depth[node] + 1;
+                    parent[0][nei] = node;
+                    queue.offer(nei);
+                }
+            }
+        }
+    }
+
+    private int lca(int u, int v) {
+        // Bring deeper node up
+        if (depth[u] < depth[v]) { int t = u; u = v; v = t; }
+        int diff = depth[u] - depth[v];
+        for (int k = 0; k < LOG; k++)
+            if (((diff >> k) & 1) == 1)
+                u = parent[k][u];
+
+        if (u == v) return u;
+
+        // Lift both until LCA
+        for (int k = LOG - 1; k >= 0; k--)
+            if (parent[k][u] != parent[k][v]) {
+                u = parent[k][u];
+                v = parent[k][v];
+            }
+
+        return parent[0][u];
+    }
+
+    
+    
+}
