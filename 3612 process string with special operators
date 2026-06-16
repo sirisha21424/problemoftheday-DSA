@@ -1,0 +1,49 @@
+class Solution {
+    public String processStr(String s) {
+       Deque<Character> dq = new LinkedList<>();
+        boolean reversed = false;
+
+        for (char ch : s.toCharArray()) {
+
+            if (ch == '*') {
+                if (!dq.isEmpty()) {
+                    if (!reversed) dq.pollLast();
+                    else dq.pollFirst();
+                }
+
+            } else if (ch == '%') {
+                reversed = !reversed;
+
+            } else if (ch == '#') {
+
+                int size = dq.size();
+                List<Character> snapshot = new ArrayList<>();
+
+                if (!reversed) {
+                    for (char c : dq) snapshot.add(c);
+                    for (char c : snapshot) dq.addLast(c);
+                } else {
+                    // reversed view duplication
+                    for (char c : dq) snapshot.addFirst(c);
+                    for (char c : snapshot) dq.addFirst(c);
+                }
+
+            } else {
+                if (!reversed) dq.addLast(ch);
+                else dq.addFirst(ch);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (!reversed) {
+            for (char c : dq) sb.append(c);
+        } else {
+            Iterator<Character> it = dq.descendingIterator();
+            while (it.hasNext()) sb.append(it.next());
+        }
+
+        return sb.toString();
+        
+    }
+}
