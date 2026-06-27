@@ -1,0 +1,47 @@
+class Solution {
+    public int maximumLength(int[] nums) {
+        HashMap<Long, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put((long) num, map.getOrDefault((long) num, 0) + 1);
+        }
+
+        int ans = 1;
+        if (map.containsKey(1L)) {
+            int freq = map.get(1L);
+            if (freq % 2 == 0)
+                ans = Math.max(ans, freq - 1);
+            else
+                ans = Math.max(ans, freq);
+        }
+        for (long x : map.keySet()) {
+            if (x == 1) continue;
+
+            long curr = x;
+            int len = 0;
+
+            while (true) {
+                if (!map.containsKey(curr))
+                    break;
+
+                int freq = map.get(curr);
+
+                if (freq >= 2) {
+                    len += 2;
+                } else {
+                    len += 1;
+                    break;
+                }
+                if (curr > 1000000000L)
+                    break;
+
+                curr = curr * curr;
+            }
+            if (len % 2 == 0)
+                len--;
+
+            ans = Math.max(ans, len);
+        }
+
+        return ans;
+    }
+}
