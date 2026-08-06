@@ -1,0 +1,23 @@
+class Solution {
+    public int smallestNumber(int n, int t) {
+        int num=n;
+        int product=1;
+        while(true)
+        {   product=productofdigits(num);
+            if(product%t==0)
+                return num;
+            num++;
+        }
+    }
+    private int productofdigits(int num)
+    {   int n=num;
+        int pro=1;
+        while(n>0)
+        {   pro*=n%10;
+            n=n/10;
+        }
+        return pro;
+    }
+        
+        
+}
