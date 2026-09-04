@@ -1,0 +1,23 @@
+class Solution {
+    public int firstStableIndex(int[] nums, int k) {
+        int max=nums[0];
+        int min=0;
+        int index=1000;
+        for(int i=0;i<nums.length;i++)
+        {   max=Math.max(max,nums[i]);
+            int j=i;
+            min=nums[i];
+            while(j<nums.length)
+            {   min=Math.min(min,nums[j]);
+                j++;
+            }
+            if(max-min<=k)
+            {   index=Math.min(index,i);
+            }
+        }
+        if(index==1000)
+            return -1;
+        return index;
+        
+    }
+}
