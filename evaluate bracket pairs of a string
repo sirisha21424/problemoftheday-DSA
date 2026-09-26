@@ -1,0 +1,39 @@
+class Solution {
+    public String evaluate(String s, List<List<String>> knowledge) {
+        HashMap<String,String> map=new HashMap<>();
+        StringBuilder sb1=new StringBuilder();
+        for(int i=0;i<knowledge.size();i++)
+        {   map.put(knowledge.get(i).get(0),knowledge.get(i).get(1));
+        }
+        int i=0;
+        while(i<s.length())
+        {  
+            if(s.charAt(i)=='(')
+            {   i++; 
+                StringBuilder sb=new StringBuilder();
+                 while(s.charAt(i)!=')')
+                {   sb.append(s.charAt(i));
+                    i++;
+                }
+                String str=sb.toString();
+                if(map.containsKey(str))
+                {
+                    sb1.append(map.get(str));
+                }
+                else
+                {   sb1.append("?");
+                }
+            }
+            else
+            {   if(s.charAt(i)!=')')
+                {   sb1.append(s.charAt(i));
+                }
+            }
+            i++;
+
+        
+        }
+        return sb1.toString();
+        
+    }
+}
