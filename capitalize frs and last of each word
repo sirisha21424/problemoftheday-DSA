@@ -1,0 +1,20 @@
+class Solution {
+    public String capitalizeFirstLast(String s) {
+        // Your code goes here
+        StringBuilder sb=new StringBuilder(s);
+        int i=0;
+        while(i<sb.length())
+        {   if(s.charAt(i)==' ')
+            {   i++;
+                continue;
+            }
+            sb.setCharAt(i,Character.toUpperCase(sb.charAt(i)));
+            while(i<sb.length() && sb.charAt(i)!=' ')
+            {   i++;
+            }
+            sb.setCharAt(i-1,Character.toUpperCase(sb.charAt(i-1)));
+        }
+        return sb.toString();
+
+    }
+}
