@@ -1,0 +1,25 @@
+class Solution {
+    public int minInsertions(String s) {
+        int count=0;
+        int balance=0;
+        for(int i=0;i<s.length();i++)
+        {   if(s.charAt(i)=='(')
+            {   balance+=2;
+                  if (balance % 2 != 0) {
+                count++;
+                balance--;
+                }
+            }
+            else
+            {  balance--;
+                if(balance<0)
+                {   balance=1;
+                    count++;
+                }
+                
+            }
+        }
+        return count+balance;
+        
+    }
+}
