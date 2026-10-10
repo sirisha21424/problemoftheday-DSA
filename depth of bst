@@ -1,0 +1,26 @@
+import java.util.*;
+
+class Solution {
+    public int maxDepthBST(int[] order) {
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        int maxDepth = 0;
+
+        for (int val : order) {
+            Integer lower = map.lowerKey(val);
+            Integer higher = map.higherKey(val);
+
+            int depth = 1;
+
+            if (lower != null)
+                depth = Math.max(depth, map.get(lower) + 1);
+
+            if (higher != null)
+                depth = Math.max(depth, map.get(higher) + 1);
+
+            map.put(val, depth);
+            maxDepth = Math.max(maxDepth, depth);
+        }
+
+        return maxDepth;
+    }
+}
