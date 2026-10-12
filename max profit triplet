@@ -1,0 +1,32 @@
+class Solution {
+    public int maxProfit(int[] prices, int[] profits) {
+        //your code goes here
+      int n = prices.length;
+        int maxProfit = -1;
+
+        for (int j = 1; j < n - 1; j++) {
+            int left = -1;
+            int right = -1;
+            for (int i = 0; i < j; i++) {
+                if (prices[i] < prices[j]) {
+                    left = Math.max(left, profits[i]);
+                }
+            }
+            for (int k = j + 1; k < n; k++) {
+                if (prices[k] > prices[j]) {
+                    right = Math.max(right, profits[k]);
+                }
+            }
+            if (left != -1 && right != -1) {
+                maxProfit = Math.max(
+                    maxProfit, left + profits[j] + right
+                );
+            }
+        }
+
+        return maxProfit;
+
+
+
+    }
+}
