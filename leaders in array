@@ -1,0 +1,18 @@
+class Solution {
+    public List<Integer> leaders(int[] nums) {
+        List<Integer> list=new ArrayList<>();
+        int n=nums.length;
+        list.add(nums[n-1]);
+        int max=nums[n-1];
+        for(int i=n-1;i>=0;i--)
+        {   if(nums[i]>max)
+            {   list.add(nums[i]);
+                max=nums[i];
+            }
+        }
+        Collections.reverse(list);
+        return list;
+
+        
+    }
+}
