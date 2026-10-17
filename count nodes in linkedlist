@@ -1,0 +1,12 @@
+class Solution {
+    public int countNodes(ListNode head) {
+        // Your code goes here
+        int count=0;
+        ListNode temp=head;
+        while(temp!=null)
+        {   count+=1;
+            temp=temp.next;
+        }
+        return count;
+    }
+}
