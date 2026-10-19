@@ -1,0 +1,20 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        //your code goes here
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+        long a = Math.abs((long) dividend);
+        long b = Math.abs((long) divisor);
+        int count=0;
+        int sign = (dividend < 0) ^ (divisor < 0) ? -1 : 1;
+        while(a>=b)
+        {   
+            a-=b;
+            count++;
+        }
+
+        return sign*count;
+
+    }
+}
