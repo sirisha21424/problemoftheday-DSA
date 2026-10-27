@@ -1,0 +1,15 @@
+class Solution {  
+    public boolean anagramStrings(String s, String t) {
+         if(s.length() != t.length())
+            return false;
+        HashMap<Character,Integer> list=new HashMap<>();
+        HashMap<Character,Integer> list1=new HashMap<>();
+        for(char ch:s.toCharArray())
+        {   list.put(ch,list.getOrDefault(ch,0)+1);
+        }
+        for(char ch:t.toCharArray())
+        {   list1.put(ch,list1.getOrDefault(ch,0)+1);
+        }
+        return list.equals(list1);
+    }
+}
