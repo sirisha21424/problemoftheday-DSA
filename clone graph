@@ -1,0 +1,22 @@
+class Solution {
+    HashMap<Node, Node> map = new HashMap<>();
+    public Node cloneGraph(Node node) {
+        // Your code goes here
+        if(node==null)
+            return null;
+        if (map.containsKey(node)) {
+            return map.get(node);
+        }
+
+        Node clone = new Node(node.val);
+        map.put(node, clone);
+
+        for (int i = 0; i < node.neighbors.size(); i++) {
+            Node neighbor = node.neighbors.get(i);
+            clone.neighbors.add(cloneGraph(neighbor));
+        }
+
+        return clone;
+        
+    }
+}
