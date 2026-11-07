@@ -1,0 +1,47 @@
+class Solution {
+    public List<String> generateAbbreviations(String word) {
+        // Your code goes here
+        List<String> ans = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        solve(word, 0, 0, sb, ans);
+
+        return ans;
+    }
+
+    public void solve(String word, int index, int count,
+                      StringBuilder sb, List<String> ans) {
+
+        if (index == word.length()) {
+            int len = sb.length();
+
+            if (count > 0) {
+                sb.append(count);
+            }
+
+            ans.add(sb.toString());
+
+            sb.setLength(len);
+            return;
+        }
+
+   
+        solve(word, index + 1, count + 1, sb, ans);
+
+    
+        int len = sb.length();
+
+        if (count > 0) {
+            sb.append(count);
+        }
+
+        sb.append(word.charAt(index));
+
+        solve(word, index + 1, 0, sb, ans);
+
+  
+        sb.setLength(len);
+
+
+    }
+}
