@@ -1,0 +1,24 @@
+class Solution {
+    int mini = Integer.MAX_VALUE;
+
+    public int minDiff(Node root, int k) {
+
+        mini = Integer.MAX_VALUE;
+
+        bfs(root, k);
+
+        return mini;
+    }
+
+    public void bfs(Node root, int k) {
+        if (root == null)
+            return;
+
+        int diff = Math.abs(root.data - k);
+
+        mini = Math.min(mini, diff);
+
+        bfs(root.left, k);
+        bfs(root.right, k);
+    }
+}
