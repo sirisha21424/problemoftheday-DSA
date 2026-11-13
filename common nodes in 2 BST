@@ -1,0 +1,44 @@
+class Solution {
+    public ArrayList<Integer> findCommon(Node r1, Node r2) {
+        // code here
+        ArrayList<Integer> ans = new ArrayList<>();
+
+                Stack<Node> s1 = new Stack<>();
+                Stack<Node> s2 = new Stack<>();
+
+                while(true) {
+
+                    while(r1 != null) {
+                        s1.push(r1);
+                        r1 = r1.left;
+                    }
+
+                    while(r2 != null) {
+                        s2.push(r2);
+                        r2 = r2.left;
+                    }
+
+                    if(s1.isEmpty() || s2.isEmpty())
+                        break;
+
+                    Node a = s1.peek();
+                    Node b = s2.peek();
+
+                    if(a.data == b.data) {
+                        ans.add(a.data);
+
+                        r1 = s1.pop().right;
+                        r2 = s2.pop().right;
+                    }
+                    else if(a.data < b.data) {
+                        r1 = s1.pop().right;
+                    }
+                    else {
+                        r2 = s2.pop().right;
+                    }
+                }
+
+                return ans;
+    }
+    
+}
