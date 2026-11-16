@@ -1,0 +1,22 @@
+class Solution {
+    public int findKthSmall(int[] arr, int k) {
+        // code here
+        Arrays.sort(arr);
+        int n=arr.length;
+        int count=0;
+        int j=0;
+        for(int i=1; ;i++)
+        {   if(j<n && arr[j]==i)
+            {   j++;
+            }
+            else
+            {   
+                count++;
+                if(count==k)
+                {   return i;
+                }
+            }
+        }
+       
+    }
+}
