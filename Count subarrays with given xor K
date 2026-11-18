@@ -1,0 +1,29 @@
+class Solution {
+    public int subarraysWithXorK(int[] nums, int k) {
+       
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        int xor = 0;
+        int count = 0;
+
+        for(int i = 0; i < nums.length; i++) {
+
+            xor = xor ^ nums[i];
+
+            if(xor == k) {
+                count++;
+            }
+
+            int remaining = xor ^ k;
+
+            if(map.containsKey(remaining)) {
+                count += map.get(remaining);
+            }
+
+            map.put(xor, map.getOrDefault(xor, 0) + 1);
+        }
+
+        return count;
+      
+    }
+}
