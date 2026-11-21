@@ -1,0 +1,17 @@
+class Solution {
+    public int smallestSubWithSum(int[] arr, int x) {
+        // code here
+        int sum=0;
+        int minlen=Integer.MAX_VALUE;
+        int left=0;
+        for(int i=0;i<arr.length;i++)
+        {   sum+=arr[i];
+            while(sum>x)
+            {   minlen=Math.min(minlen,i-left+1);
+                sum-=arr[left];
+                left++;
+            }
+        }
+         return minlen == Integer.MAX_VALUE ? 0 : minlen;
+    }
+}
