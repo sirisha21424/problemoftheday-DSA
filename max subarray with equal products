@@ -1,0 +1,30 @@
+class Solution {
+    public int maxLength(int[] nums) {
+        int maxlen=0;
+        for(int i=0;i<nums.length;i++)
+        {   int product=1;
+            int lcm=nums[i];
+            int hcf=nums[i];
+            for(int j=i;j<nums.length;j++)
+            {   product*=nums[j];
+                if(j!=i)
+                {   lcm=(lcm*nums[j])/gcd(lcm,nums[j]);
+                    hcf=gcd(hcf,nums[j]);
+                }
+                if(product==lcm*hcf)
+                {   maxlen=Math.max(maxlen,j-i+1);
+                }
+            }
+        }
+        return maxlen;
+        
+    }
+     public int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
