@@ -1,0 +1,20 @@
+class Solution {
+    public int[] stockSpan(int[] arr, int n) {
+        Stack<Integer> st=new Stack<>();
+        int[] ans=new int[n];
+        int count=0;
+        for(int i=0;i<n;i++)
+        {   while(!st.isEmpty() && arr[st.peek()]<=arr[i])
+            {   st.pop();
+            }
+            if(st.isEmpty())
+            {   ans[i]=i+1;
+            }
+            else
+            {   ans[i]=i-st.peek();
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+}
