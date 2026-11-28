@@ -1,0 +1,45 @@
+class Solution {
+    public boolean checkPath(ArrayList<ArrayList<Integer>> adj, int u, int v) {
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        for(int i = 0; i < adj.size(); i++) {
+            ans.add(new ArrayList<>());
+        }
+        for(int i=0;i<adj.size();i++)
+        {  {   for(int j=0;j<adj.get(i).size();j++)
+                {   int a=adj.get(i).get(j);
+                    ans.get(i).add(a);
+                    ans.get(a).add(i);
+                }
+            }
+        }
+        int V = adj.size();
+        boolean[] visited = new boolean[V];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(u);
+                visited[u] = true;
+
+                while(!q.isEmpty()) {
+
+                    int node = q.poll();
+
+                    if(node == v) {
+                        return true;
+                    }
+
+                    for(int i = 0; i < adj.get(node).size(); i++) {
+
+                        int neighbour = adj.get(node).get(i);
+
+                        if(!visited[neighbour]) {
+
+                            visited[neighbour] = true;
+                            q.add(neighbour);
+                        }
+                    }
+                }
+
+                return false;
+
+                        
+    }
+}
